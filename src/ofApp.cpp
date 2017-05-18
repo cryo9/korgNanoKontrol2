@@ -1,19 +1,19 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup() {
+void ofApp::setup() {
 	ofBackground(235, 235, 235);
 	
 	korg.setup();
 }
 
 //--------------------------------------------------------------
-void testApp::update() {
+void ofApp::update() {
 	korg.update();
 }
 
 //--------------------------------------------------------------
-void testApp::draw() {   
+void ofApp::draw() {   
 	korg.draw();
 }
 

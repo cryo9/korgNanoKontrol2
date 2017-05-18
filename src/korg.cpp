@@ -49,272 +49,321 @@ void Korg::setup() {
 }
 
 //--------------------------------------------------------------
+void Korg::newMidiMessage(ofxMidiMessage& msg) {
+    //std::cout << ofxMidiMessage.getStatusString(msg.status) << endl;
+    
+    string statusString = ofxMidiMessage::getStatusString(msg.status);
+    
+    ////////////////////////////////////
+    //			SLIDERS				  //
+    ////////////////////////////////////
+    if(statusString == "Pitch Bend"){
+        if(msg.channel == 1){
+            sliders[0] = msg.value;
+        }
+        if(msg.channel == 2){
+            sliders[1] = msg.value;
+        }
+        if(msg.channel == 3){
+            sliders[2] = msg.value;
+        }
+        if(msg.channel == 4){
+            sliders[3] = msg.value;
+        }
+        if(msg.channel == 5){
+            sliders[4] = msg.value;
+        }
+        if(msg.channel == 6){
+            sliders[5] = msg.value;
+        }
+        if(msg.channel == 7){
+            sliders[6] = msg.value;
+        }
+        if(msg.channel == 8){
+            sliders[7] = msg.value;
+        }
+    }
+    
+    ////////////////////////////////////
+    //		    	KNOBS   		  //
+    ////////////////////////////////////
+    // WIP
+    if(statusString == "Control Change"){
+        if(msg.control == 16){
+            knobs[0] = msg.value;
+        }
+        if(msg.control == 17){
+            knobs[1] = msg.value;
+        }
+        if(msg.control == 18){
+            knobs[2] = msg.value;
+        }
+        if(msg.control == 19){
+            knobs[3] = msg.value;
+        }
+        if(msg.control == 20){
+            knobs[4] = msg.value;
+        }
+        if(msg.control == 21){
+            knobs[5] = msg.value;
+        }
+        if(msg.control == 22){
+            knobs[6] = msg.value;
+        }
+        if(msg.control == 23){
+            knobs[7] = msg.value;
+        }
+    }
+    
+    if(statusString == "Note On"){
+        //cout << "Channel:" << ofToString(msg.channel) << " Pitch:" << ofToString(msg.pitch) << endl;
+        //cout << "portNum:" << ofToString(msg.portNum) << " Velocity:" << ofToString(msg.velocity) << endl << endl;
+
+        ////////////////////////////////////
+        //		    SOLO BUTTONS		  //
+        ////////////////////////////////////
+        if(msg.pitch == 8 && msg.velocity == 127){
+            buttonsSolo[0] = true;
+        } else if(msg.pitch == 8 && msg.velocity == 0){
+            buttonsSolo[0] = false;
+        }
+        if(msg.pitch == 9 && msg.velocity == 127){
+            buttonsSolo[1] = true;
+        } else if(msg.pitch == 9 && msg.velocity == 0){
+            buttonsSolo[1] = false;
+        }
+        if(msg.pitch == 10 && msg.velocity == 127){
+            buttonsSolo[2] = true;
+        } else if(msg.pitch == 10 && msg.velocity == 0){
+            buttonsSolo[2] = false;
+        }
+        if(msg.pitch == 11 && msg.velocity == 127){
+            buttonsSolo[3] = true;
+        } else if(msg.pitch == 11 && msg.velocity == 0){
+            buttonsSolo[3] = false;
+        }
+        if(msg.pitch == 12 && msg.velocity == 127){
+            buttonsSolo[4] = true;
+        } else if(msg.pitch == 12 && msg.velocity == 0){
+            buttonsSolo[4] = false;
+        }
+        if(msg.pitch == 13 && msg.velocity == 127){
+            buttonsSolo[5] = true;
+        } else if(msg.pitch == 13 && msg.velocity == 0){
+            buttonsSolo[5] = false;
+        }
+        if(msg.pitch == 14 && msg.velocity == 127){
+            buttonsSolo[6] = true;
+        } else if(msg.pitch == 14 && msg.velocity == 0){
+            buttonsSolo[6] = false;
+        }
+        if(msg.pitch == 15 && msg.velocity == 127){
+            buttonsSolo[7] = true;
+        } else if(msg.pitch == 15 && msg.velocity == 0){
+            buttonsSolo[7] = false;
+        }
+        
+        ////////////////////////////////////
+        //		    MUTE BUTTONS		  //
+        ////////////////////////////////////
+        if(msg.pitch == 16 && msg.velocity == 127){
+            buttonsMute[0] = true;
+        } else if(msg.pitch == 16 && msg.velocity == 0){
+            buttonsMute[0] = false;
+        }
+        if(msg.pitch == 17 && msg.velocity == 127){
+            buttonsMute[1] = true;
+        } else if(msg.pitch == 17 && msg.velocity == 0){
+            buttonsMute[1] = false;
+        }
+        if(msg.pitch == 18 && msg.velocity == 127){
+            buttonsMute[2] = true;
+        } else if(msg.pitch == 18 && msg.velocity == 0){
+            buttonsMute[2] = false;
+        }
+        if(msg.pitch == 19 && msg.velocity == 127){
+            buttonsMute[3] = true;
+        } else if(msg.pitch == 19 && msg.velocity == 0){
+            buttonsMute[3] = false;
+        }
+        if(msg.pitch == 20 && msg.velocity == 127){
+            buttonsMute[4] = true;
+        } else if(msg.pitch == 20 && msg.velocity == 0){
+            buttonsMute[4] = false;
+        }
+        if(msg.pitch == 21 && msg.velocity == 127){
+            buttonsMute[5] = true;
+        } else if(msg.pitch == 21 && msg.velocity == 0){
+            buttonsMute[5] = false;
+        }
+        if(msg.pitch == 22 && msg.velocity == 127){
+            buttonsMute[6] = true;
+        } else if(msg.pitch == 22 && msg.velocity == 0){
+            buttonsMute[6] = false;
+        }
+        if(msg.pitch == 23 && msg.velocity == 127){
+            buttonsMute[7] = true;
+        } else if(msg.pitch == 23 && msg.velocity == 0){
+            buttonsMute[7] = false;
+        }
+        
+        ////////////////////////////////////
+        //		    RECORD BUTTONS		  //
+        ////////////////////////////////////
+        if(msg.pitch == 0 && msg.velocity == 127){
+            buttonsRec[0] = true;
+        } else if(msg.pitch == 0 && msg.velocity == 0){
+            buttonsRec[0] = false;
+        }
+        if(msg.pitch == 1 && msg.velocity == 127){
+            buttonsRec[1] = true;
+        } else if(msg.pitch == 1 && msg.velocity == 0){
+            buttonsRec[1] = false;
+        }
+        if(msg.pitch == 2 && msg.velocity == 127){
+            buttonsRec[2] = true;
+        } else if(msg.pitch == 2 && msg.velocity == 0){
+            buttonsRec[2] = false;
+        }
+        if(msg.pitch == 3 && msg.velocity == 127){
+            buttonsRec[3] = true;
+        } else if(msg.pitch == 3 && msg.velocity == 0){
+            buttonsRec[3] = false;
+        }
+        if(msg.pitch == 4 && msg.velocity == 127){
+            buttonsRec[4] = true;
+        } else if(msg.pitch == 4 && msg.velocity == 0){
+            buttonsRec[4] = false;
+        }
+        if(msg.pitch == 5 && msg.velocity == 127){
+            buttonsRec[5] = true;
+        } else if(msg.pitch == 5 && msg.velocity == 0){
+            buttonsRec[5] = false;
+        }
+        if(msg.pitch == 6 && msg.velocity == 127){
+            buttonsRec[6] = true;
+        } else if(msg.pitch == 6 && msg.velocity == 0){
+            buttonsRec[6] = false;
+        }
+        if(msg.pitch == 7 && msg.velocity == 127){
+            buttonsRec[7] = true;
+        } else if(msg.pitch == 7 && msg.velocity == 0){
+            buttonsRec[7] = false;
+        }
+        
+        
+        ////////////////////////////////////
+        //		    LEFT BUTTONS		  //
+        ////////////////////////////////////
+        if(msg.pitch == 46 && msg.velocity == 127){
+            buttonTrackLeft = true;
+        } else if(msg.pitch == 46 && msg.velocity == 0){
+            buttonTrackLeft = false;
+        }
+        if(msg.pitch == 47 && msg.velocity == 127){
+            buttonTrackRight = true;
+        } else if(msg.pitch == 47 && msg.velocity == 0){
+            buttonTrackRight = false;
+        }
+        if(msg.pitch == 89 && msg.velocity == 127){
+            buttonCycle = true;
+        } else if(msg.pitch == 89 && msg.velocity == 0){
+            buttonCycle = false;
+        }
+        /*if(msg.pitch == 60 && msg.velocity == 127){
+         buttonMarkerSet = true;
+         } else if(msg.pitch == 60 && msg.velocity == 0){
+         buttonMarkerSet = false;
+         }
+         if(msg.pitch == 61 && msg.velocity == 127){
+         buttonMarkerLeft = true;
+         } else if(msg.pitch == 61 && msg.velocity == 0){
+         buttonMarkerLeft = false;
+         }
+         if(msg.pitch == 62 && msg.velocity == 127){
+         buttonMarkerRight = true;
+         } else if(msg.pitch == 62 && msg.velocity == 0){
+         buttonMarkerRight = false;
+         }*/
+        if(msg.pitch == 91 && msg.velocity == 127){
+            buttonRewind = true;
+        } else if(msg.pitch == 91 && msg.velocity == 0){
+            buttonRewind = false;
+        }
+        if(msg.pitch == 92 && msg.velocity == 127){
+            buttonFastForward = true;
+        } else if(msg.pitch == 92 && msg.velocity == 0){
+            buttonFastForward = false;
+        }
+        if(msg.pitch == 93 && msg.velocity == 127){
+            buttonStop = true;
+        } else if(msg.pitch == 93 && msg.velocity == 0){
+            buttonStop = false;
+        }
+        if(msg.pitch == 94 && msg.velocity == 127){
+            buttonPlay = true;
+        } else if(msg.pitch == 94 && msg.velocity == 0){
+            buttonPlay = false;
+        }
+        if(msg.pitch == 95 && msg.velocity == 127){
+            buttonRecord = true;
+        } else if(msg.pitch == 95 && msg.velocity == 0){
+            buttonRecord = false;
+        }
+    }
+}
+
+
+//--------------------------------------------------------------
 void Korg::update() {
-	
-	NoteOnOff = ofxMidiMessage::getStatusString(midiMessage.status);
-	
-    ////////////////////////////////////
-	//			SLIDERS				  //
-	////////////////////////////////////
-	
-	if(midiMessage.control == 0){
-		sliders[0] = midiMessage.value;
-	}
-	if(midiMessage.control == 1){
-		sliders[1] = midiMessage.value;
-	}
-	if(midiMessage.control == 2){
-		sliders[2] = midiMessage.value;
-	}
-	if(midiMessage.control == 3){
-		sliders[3] = midiMessage.value;
-	}
-	if(midiMessage.control == 4){
-		sliders[4] = midiMessage.value;
-	}
-	if(midiMessage.control == 5){
-		sliders[5] = midiMessage.value;
-	}
-	if(midiMessage.control == 6){
-		sliders[6] = midiMessage.value;
-	}
-	if(midiMessage.control == 7){
-		sliders[7] = midiMessage.value;
-	}
-    
-	////////////////////////////////////
-	//		    	KNOBS   		  //
-	////////////////////////////////////
-	
-	if(midiMessage.control == 16){
-		knobs[0] = midiMessage.value;
-	}
-	if(midiMessage.control == 17){
-		knobs[1] = midiMessage.value;
-	}
-	if(midiMessage.control == 18){
-		knobs[2] = midiMessage.value;
-	}
-	if(midiMessage.control == 19){
-		knobs[3] = midiMessage.value;
-	}
-	if(midiMessage.control == 20){
-		knobs[4] = midiMessage.value;
-	}	
-	if(midiMessage.control == 21){
-		knobs[5] = midiMessage.value;
-	}
-	if(midiMessage.control == 22){
-		knobs[6] = midiMessage.value;
-	}
-	if(midiMessage.control == 23){
-		knobs[7] = midiMessage.value;
-	}
-    
-    ////////////////////////////////////
-	//		    SOLO BUTTONS		  //
-	////////////////////////////////////
+    bool sendMidi = true;
+    if(sendMidi == true){
+        int channel = 1;
 
-    if(midiMessage.control == 32 && midiMessage.value == 127){
-        buttonsSolo[0] = true;
-    } else if(midiMessage.control == 32 && midiMessage.value == 0){
-        buttonsSolo[0] = false;
-    }
-    if(midiMessage.control == 33 && midiMessage.value == 127){
-        buttonsSolo[1] = true;
-    } else if(midiMessage.control == 33 && midiMessage.value == 0){
-        buttonsSolo[1] = false;
-    }
-    if(midiMessage.control == 34 && midiMessage.value == 127){
-        buttonsSolo[2] = true;
-    } else if(midiMessage.control == 34 && midiMessage.value == 0){
-        buttonsSolo[2] = false;
-    }
-    if(midiMessage.control == 35 && midiMessage.value == 127){
-        buttonsSolo[3] = true;
-    } else if(midiMessage.control == 35 && midiMessage.value == 0){
-        buttonsSolo[3] = false;
-    }
-    if(midiMessage.control == 36 && midiMessage.value == 127){
-        buttonsSolo[4] = true;
-    } else if(midiMessage.control == 36 && midiMessage.value == 0){
-        buttonsSolo[4] = false;
-    }
-    if(midiMessage.control == 37 && midiMessage.value == 127){
-        buttonsSolo[5] = true;
-    } else if(midiMessage.control == 37 && midiMessage.value == 0){
-        buttonsSolo[5] = false;
-    }
-    if(midiMessage.control == 38 && midiMessage.value == 127){
-        buttonsSolo[6] = true;
-    } else if(midiMessage.control == 38 && midiMessage.value == 0){
-        buttonsSolo[6] = false;
-    }
-    if(midiMessage.control == 39 && midiMessage.value == 127){
-        buttonsSolo[7] = true;
-    } else if(midiMessage.control == 39 && midiMessage.value == 0){
-        buttonsSolo[7] = false;
-    }
-    
-    ////////////////////////////////////
-	//		    MUTE BUTTONS		  //
-	////////////////////////////////////
-    
-    if(midiMessage.control == 48 && midiMessage.value == 127){
-        buttonsMute[0] = true;
-    } else if(midiMessage.control == 48 && midiMessage.value == 0){
-        buttonsMute[0] = false;
-    }
-    if(midiMessage.control == 49 && midiMessage.value == 127){
-        buttonsMute[1] = true;
-    } else if(midiMessage.control == 49 && midiMessage.value == 0){
-        buttonsMute[1] = false;
-    }
-    if(midiMessage.control == 50 && midiMessage.value == 127){
-        buttonsMute[2] = true;
-    } else if(midiMessage.control == 50 && midiMessage.value == 0){
-        buttonsMute[2] = false;
-    }
-    if(midiMessage.control == 51 && midiMessage.value == 127){
-        buttonsMute[3] = true;
-    } else if(midiMessage.control == 51 && midiMessage.value == 0){
-        buttonsMute[3] = false;
-    }
-    if(midiMessage.control == 52 && midiMessage.value == 127){
-        buttonsMute[4] = true;
-    } else if(midiMessage.control == 52 && midiMessage.value == 0){
-        buttonsMute[4] = false;
-    }
-    if(midiMessage.control == 53 && midiMessage.value == 127){
-        buttonsMute[5] = true;
-    } else if(midiMessage.control == 53 && midiMessage.value == 0){
-        buttonsMute[5] = false;
-    }
-    if(midiMessage.control == 54 && midiMessage.value == 127){
-        buttonsMute[6] = true;
-    } else if(midiMessage.control == 54 && midiMessage.value == 0){
-        buttonsMute[6] = false;
-    }
-    if(midiMessage.control == 55 && midiMessage.value == 127){
-        buttonsMute[7] = true;
-    } else if(midiMessage.control == 55 && midiMessage.value == 0){
-        buttonsMute[7] = false;
+        // send Solo Buttons
+        for(i = 0; i <= 8; i++){
+            int outPitch = i + 8;
+            int outVelocity = buttonsSolo[i] * 127;
+            midiOut.sendNoteOn(channel, outPitch, outVelocity);
+        }
+        
+        // send Mute Buttons
+        for(i = 0; i <= 8; i++){
+            int outPitch = i + 16;
+            int outVelocity = buttonsMute[i] * 127;
+            midiOut.sendNoteOn(channel, outPitch, outVelocity);
+        }
+        
+        // send Rec Buttons
+        for(i = 0; i <= 8; i++){
+            int outPitch = i;
+            int outVelocity = buttonsRec[i] * 127;
+            midiOut.sendNoteOn(channel, outPitch, outVelocity);
+        }
+        
+        // send Left Buttons
+        midiOut.sendNoteOn(channel, 46, buttonTrackLeft * 127);
+        midiOut.sendNoteOn(channel, 47, buttonTrackRight * 127);
+        midiOut.sendNoteOn(channel, 89, buttonCycle * 127);
+        midiOut.sendNoteOn(channel, 91, buttonRewind * 127);
+        midiOut.sendNoteOn(channel, 92, buttonFastForward * 127);
+        midiOut.sendNoteOn(channel, 93, buttonStop * 127);
+        midiOut.sendNoteOn(channel, 94, buttonPlay * 127);
+        midiOut.sendNoteOn(channel, 95, buttonRecord * 127);
+
     }
 
-    ////////////////////////////////////
-	//		    RECORD BUTTONS		  //
-	////////////////////////////////////
-    
-    if(midiMessage.control == 64 && midiMessage.value == 127){
-        buttonsRec[0] = true;
-    } else if(midiMessage.control == 64 && midiMessage.value == 0){
-        buttonsRec[0] = false;
-    }
-    if(midiMessage.control == 65 && midiMessage.value == 127){
-        buttonsRec[1] = true;
-    } else if(midiMessage.control == 65 && midiMessage.value == 0){
-        buttonsRec[1] = false;
-    }
-    if(midiMessage.control == 66 && midiMessage.value == 127){
-        buttonsRec[2] = true;
-    } else if(midiMessage.control == 66 && midiMessage.value == 0){
-        buttonsRec[2] = false;
-    }
-    if(midiMessage.control == 67 && midiMessage.value == 127){
-        buttonsRec[3] = true;
-    } else if(midiMessage.control == 67 && midiMessage.value == 0){
-        buttonsRec[3] = false;
-    }
-    if(midiMessage.control == 68 && midiMessage.value == 127){
-        buttonsRec[4] = true;
-    } else if(midiMessage.control == 68 && midiMessage.value == 0){
-        buttonsRec[4] = false;
-    }
-    if(midiMessage.control == 69 && midiMessage.value == 127){
-        buttonsRec[5] = true;
-    } else if(midiMessage.control == 69 && midiMessage.value == 0){
-        buttonsRec[5] = false;
-    }
-    if(midiMessage.control == 70 && midiMessage.value == 127){
-        buttonsRec[6] = true;
-    } else if(midiMessage.control == 70 && midiMessage.value == 0){
-        buttonsRec[6] = false;
-    }
-    if(midiMessage.control == 71 && midiMessage.value == 127){
-        buttonsRec[7] = true;
-    } else if(midiMessage.control == 71 && midiMessage.value == 0){
-        buttonsRec[7] = false;
-    }
-    
-    ////////////////////////////////////
-	//		    LEFT BUTTONS		  //
-	////////////////////////////////////
-    if(midiMessage.control == 58 && midiMessage.value == 127){
-        buttonTrackLeft = true;
-    } else if(midiMessage.control == 58 && midiMessage.value == 0){
-        buttonTrackLeft = false;
-    }
-    if(midiMessage.control == 59 && midiMessage.value == 127){
-        buttonTrackRight = true;
-    } else if(midiMessage.control == 59 && midiMessage.value == 0){
-        buttonTrackRight = false;
-    }
-    if(midiMessage.control == 46 && midiMessage.value == 127){
-        buttonCycle = true;
-    } else if(midiMessage.control == 46 && midiMessage.value == 0){
-        buttonCycle = false;
-    }
-    if(midiMessage.control == 60 && midiMessage.value == 127){
-        buttonMarkerSet = true;
-    } else if(midiMessage.control == 60 && midiMessage.value == 0){
-        buttonMarkerSet = false;
-    }
-    if(midiMessage.control == 61 && midiMessage.value == 127){
-        buttonMarkerLeft = true;
-    } else if(midiMessage.control == 61 && midiMessage.value == 0){
-        buttonMarkerLeft = false;
-    }
-    if(midiMessage.control == 62 && midiMessage.value == 127){
-        buttonMarkerRight = true;
-    } else if(midiMessage.control == 62 && midiMessage.value == 0){
-        buttonMarkerRight = false;
-    }
-    if(midiMessage.control == 43 && midiMessage.value == 127){
-        buttonRewind = true;
-    } else if(midiMessage.control == 43 && midiMessage.value == 0){
-        buttonRewind = false;
-    }
-    if(midiMessage.control == 44 && midiMessage.value == 127){
-        buttonFastForward = true;
-    } else if(midiMessage.control == 44 && midiMessage.value == 0){
-        buttonFastForward = false;
-    }
-    if(midiMessage.control == 42 && midiMessage.value == 127){
-        buttonStop = true;
-    } else if(midiMessage.control == 42 && midiMessage.value == 0){
-        buttonStop = false;
-    }
-    if(midiMessage.control == 41 && midiMessage.value == 127){
-        buttonPlay = true;
-    } else if(midiMessage.control == 41 && midiMessage.value == 0){
-        buttonPlay = false;
-    }
-    if(midiMessage.control == 45 && midiMessage.value == 127){
-        buttonRecord = true;
-    } else if(midiMessage.control == 45 && midiMessage.value == 0){
-        buttonRecord = false;
-    }
-    
 }
 
 //--------------------------------------------------------------
 void Korg::draw() {
-	
+
+    
 	ofSetColor(155,0,0);
 
     ofNoFill();
-    ofRect(0,30,ofGetWidth(),70);
-    ofRect(0,110,ofGetWidth(),ofGetHeight()-120);
+    ofDrawRectangle(0,30,ofGetWidth(),70);
+    ofDrawRectangle(0,110,ofGetWidth(),ofGetHeight()-120);
 
     ofSetColor(0);
     ofDrawBitmapString("KORG NANO KONTROL 2 ", 40,20);
@@ -397,11 +446,3 @@ void Korg::exit() {
 	midiIn.closePort();
 	midiIn.removeListener(this);
 }
-
-//--------------------------------------------------------------
-void Korg::newMidiMessage(ofxMidiMessage& msg) {
-	
-	// make a copy of the latest message
-	midiMessage = msg;
-}
-

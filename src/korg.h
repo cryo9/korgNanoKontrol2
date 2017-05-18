@@ -10,7 +10,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxMidi.h"
+#include "ofxMidi.h"        //https://github.com/danomatika/ofxMidi
 
 class Korg : public ofxMidiListener {
 	
@@ -25,9 +25,7 @@ public:
 	stringstream text;
 	string NoteOnOff;
 	
-	ofxMidiIn midiIn;
-	ofxMidiMessage midiMessage;
-	
+	ofxMidiIn midiIn;	
 	ofxMidiOut midiOut;
 	int channel, note, velocity;
 	
